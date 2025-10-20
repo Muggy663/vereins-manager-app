@@ -1,41 +1,119 @@
-<<<<<<< HEAD
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎯 Vereins-Manager
 
-## Getting Started
+> **Moderne Digitalisierung für deutsche Schützenvereine**
 
-First, run the development server:
+Eine vollständig digitale Lösung für die Verwaltung von Schützenvereinen. Entwickelt als eigenständige App für professionelle Vereinsführung.
+
+[![Version](https://img.shields.io/badge/Version-1.0.0-blue?style=for-the-badge)](#)
+[![Tech Stack](https://img.shields.io/badge/Tech-Next.js_15_+_Firebase-blue?style=for-the-badge)](#)
+
+## ✨ Hauptfunktionen
+
+### 👥 **Mitgliederverwaltung**
+- Vollständige Mitgliederdatenbank mit allen wichtigen Daten
+- Import/Export-Funktionen für bestehende Listen
+- Geburtstage & Jubiläen-Verwaltung
+- Suchfunktionen und sortierbare Listen
+
+### 💰 **Beitragsverwaltung & SEPA**
+- SEPA-Lastschrift Integration mit Mandate-Verwaltung
+- Flexible Beitragssätze nach Altersgruppen
+- Automatische Mahnungen und Zahlungsübersicht
+- Multi-Bank-Export-Formate
+
+### 📅 **Terminplanung & Dienste**
+- Digitale Dienstpläne (Standaufsicht, Küche, etc.)
+- Automatische Erinnerungen
+- Tauschbörse für Dienste
+- Vereinskalender
+
+### 🏆 **Digitales Schießbuch**
+- Persönliches Schießbuch für jeden Schützen
+- Ergebnisse dokumentieren und Fortschritt verfolgen
+- Statistiken und Auswertungen
+- Optional: Integration mit RWK-App
+
+### 📋 **Vereinsrecht & Protokolle**
+- Digitale Protokollerstellung
+- Wahlen-System für Vereinswahlen
+- Satzungsverwaltung
+- Rechtssichere Vereinsführung
+
+## 🛠️ Technologie-Stack
+
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **UI/UX**: Tailwind CSS, Radix UI, Lucide Icons
+- **Backend**: Firebase (Firestore, Auth, Functions, Storage)
+- **Deployment**: Vercel
+- **Multi-Tenancy**: Club-spezifische Datentrennung
+
+## 🚀 Entwicklung
+
+### Voraussetzungen
+- Node.js 18+
+- npm oder pnpm
+- Firebase Account
+
+### Installation
 
 ```bash
+# Repository klonen
+git clone https://github.com/Muggy663/vereins-manager-app.git
+cd vereins-manager-app
+
+# Dependencies installieren
+npm install
+
+# Environment-Variablen konfigurieren
+cp .env.local.example .env.local
+# Firebase-Konfiguration in .env.local eintragen
+
+# Development-Server starten
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Firebase Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Neues Firebase-Projekt erstellen: `vereins-manager-prod`
+2. Authentication aktivieren (E-Mail/Passwort)
+3. Firestore Database erstellen
+4. Storage aktivieren
+5. Firebase-Config in `.env.local` eintragen
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📊 Datenbank-Struktur
 
-## Learn More
+```
+/clubs/{clubId}                    # Vereins-Stammdaten
+/clubs/{clubId}/mitglieder/        # Mitglieder des Vereins
+/clubs/{clubId}/service_plans/     # Dienstpläne
+/clubs/{clubId}/tasks/             # Aufgaben-Management
+/clubs/{clubId}/contributions/     # Beitragsverwaltung
 
-To learn more about Next.js, take a look at the following resources:
+/user_permissions/{userId}         # Benutzer-Berechtigungen
+/users/{userId}/shooting_logs/     # Persönliche Schießbücher
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🎯 Roadmap
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [ ] **Phase 1**: Basis-Setup und Mitgliederverwaltung
+- [ ] **Phase 2**: Beitragsverwaltung mit SEPA
+- [ ] **Phase 3**: Terminplanung und Dienstpläne
+- [ ] **Phase 4**: Digitales Schießbuch
+- [ ] **Phase 5**: Vereinsrecht und Protokolle
+- [ ] **Phase 6**: RWK-App Integration (API-Brücke)
 
-## Deploy on Vercel
+## 📞 Support & Kontakt
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **E-Mail**: rwk-leiter-ksve@gmx.de
+- **GitHub Issues**: [Issues](https://github.com/Muggy663/vereins-manager-app/issues)
+- **Entwickler**: KSV Einbeck
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-=======
-# vereins-manager-app
-Digitale Vereinsverwaltung für deutsche Schützenvereine
->>>>>>> 2fbbfd18ecd67ccbcdaccdac9b28c270fc36701a
+## 📄 Lizenz
+
+**Copyright © 2025 KSV Einbeck. Alle Rechte vorbehalten.**
+
+Diese Software ist für den Einsatz in deutschen Schützenvereinen entwickelt.
+
+---
+
+*Entwickelt mit ❤️ für den deutschen Schießsport*
