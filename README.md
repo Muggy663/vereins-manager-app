@@ -5,7 +5,7 @@
 Eine vollständig digitale Lösung für die Verwaltung von Schützenvereinen. Entwickelt als eigenständige App für professionelle Vereinsführung.
 
 [![Version](https://img.shields.io/badge/Version-1.0.0-blue?style=for-the-badge)](#)
-[![Tech Stack](https://img.shields.io/badge/Tech-Next.js_15_+_Firebase-blue?style=for-the-badge)](#)
+[![Tech Stack](https://img.shields.io/badge/Tech-Next.js_14_+_Firebase-blue?style=for-the-badge)](#)
 
 ## ✨ Hauptfunktionen
 
@@ -41,7 +41,7 @@ Eine vollständig digitale Lösung für die Verwaltung von Schützenvereinen. En
 
 ## 🛠️ Technologie-Stack
 
-- **Frontend**: Next.js 15, React 19, TypeScript
+- **Frontend**: Next.js 14, React 18, TypeScript
 - **UI/UX**: Tailwind CSS, Radix UI, Lucide Icons
 - **Backend**: Firebase (Firestore, Auth, Functions, Storage)
 - **Deployment**: Vercel
@@ -58,8 +58,8 @@ Eine vollständig digitale Lösung für die Verwaltung von Schützenvereinen. En
 
 ```bash
 # Repository klonen
-git clone https://github.com/Muggy663/vereins-manager-app.git
-cd vereins-manager-app
+git clone https://github.com/Muggy663/vereins-manager.git
+cd vereins-manager
 
 # Dependencies installieren
 npm install
@@ -81,6 +81,8 @@ npm run dev
 5. Firebase-Config in `.env.local` eintragen
 
 ## 📊 Datenbank-Struktur
+
+Die App nutzt primär die bestehenden Collections der RWK-App (`clubs`, `users`) und erweitert diese um schießbuchspezifische Sub-Collections.
 
 ```
 /clubs/{clubId}                    # Vereins-Stammdaten
