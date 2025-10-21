@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Users, CreditCard, Calendar, BookOpen, Settings, Plus, CheckSquare, Target, FileText, Shield, Award, Zap, GraduationCap, Trophy } from 'lucide-react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase/config';
-import { isDemoMode } from '@/lib/firebase/mockData';
+import { isDemoMode, mockMembers } from '@/lib/firebase/mockData';
 
 // Typdefinition für ein Mitglied, konsistent mit mitglieder/page.tsx
 interface Member {
@@ -26,10 +26,13 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (isDemoMode()) {
+      const totalMembers = mockMembers.length;
+      const activeMembers = mockMembers.filter(m => m.isActive !== false).length;
+      const openPayments = mockMembers.filter(m => m.beitragsstatus === 'offen').length;
       setStats({
-        totalMembers: 48,
-        activeMembers: 45,
-        openPayments: 8,
+        totalMembers,
+        activeMembers,
+        openPayments,
         upcomingEvents: 3
       });
     } else {
@@ -64,7 +67,7 @@ export default function DashboardPage() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Cockpit</h1>
-          <p className="text-gray-600">Test Verein</p>
+          <p className="text-gray-600">Demo Verein</p>
         </div>
         <div className="flex items-center gap-3">
           <Button 
@@ -280,15 +283,15 @@ export default function DashboardPage() {
             <CardHeader>
               <div className="flex items-center gap-3">
                 <GraduationCap className="h-8 w-8 text-orange-600" />
-                <CardTitle>Ausbildungen & Lizenzen</CardTitle>
+                <CardTitle>Lizenzen & Startrechte</CardTitle>
               </div>
             </CardHeader>
             <CardContent>
               <p className="text-gray-600 mb-4">
-                Standaufsicht, Jugendlizenz, Schießsportleiter und weitere Qualifikationen.
+                Standaufsicht, DSB-Lizenzen, Wettkampf-Startrechte und Qualifikationen.
               </p>
               <Button variant="outline" className="w-full">
-                Ausbildungen verwalten
+                Lizenzen verwalten
               </Button>
             </CardContent>
           </Card>
@@ -374,24 +377,7 @@ export default function DashboardPage() {
           </Card>
         </Link>
 
-        <Link href="/startrechte">
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Trophy className="h-8 w-8 text-gold-600" />
-                <CardTitle>Startrechte & Lizenzen</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-600 mb-4">
-                Wettkampf-Startberechtigungen, DSB-Lizenzen und Zweitvereine.
-              </p>
-              <Button variant="outline" className="w-full">
-                Startrechte verwalten
-              </Button>
-            </CardContent>
-          </Card>
-        </Link>
+
 
         <Link href="/dienstplaene">
           <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
