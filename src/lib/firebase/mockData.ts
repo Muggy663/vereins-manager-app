@@ -144,5 +144,8 @@ export const mockTraining = [
 ];
 
 export const isDemoMode = () => {
+  if (typeof window === 'undefined') {
+    return true; // Default to demo mode during SSR
+  }
   return !localStorage.getItem('real_admin_mode');
 };

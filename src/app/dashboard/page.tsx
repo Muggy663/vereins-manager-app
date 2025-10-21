@@ -69,7 +69,11 @@ export default function DashboardPage() {
         <div className="flex items-center gap-3">
           <Button 
             variant="outline" 
-            onClick={() => window.location.href = '/'}
+            onClick={() => {
+              if (typeof window !== 'undefined') {
+                window.location.href = '/';
+              }
+            }}
             className="flex items-center gap-2"
           >
             ← Zur Startseite
@@ -78,7 +82,11 @@ export default function DashboardPage() {
             <>
               <Button 
                 variant="outline" 
-                onClick={() => window.location.href = '/admin'}
+                onClick={() => {
+                  if (typeof window !== 'undefined') {
+                    window.location.href = '/admin';
+                  }
+                }}
                 className="flex items-center gap-2"
               >
                 Admin-Bereich
@@ -86,8 +94,10 @@ export default function DashboardPage() {
               <Button 
                 variant="outline" 
                 onClick={() => {
-                  localStorage.removeItem('real_admin_mode');
-                  window.location.href = '/';
+                  if (typeof window !== 'undefined') {
+                    localStorage.removeItem('real_admin_mode');
+                    window.location.href = '/';
+                  }
                 }}
                 className="flex items-center gap-2"
               >
