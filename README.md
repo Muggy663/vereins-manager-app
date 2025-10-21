@@ -54,23 +54,6 @@ Eine vollständig digitale Lösung für die Verwaltung von Schützenvereinen. En
 - npm oder pnpm
 - Firebase Account
 
-### Installation
-
-```bash
-# Repository klonen
-git clone https://github.com/Muggy663/vereins-manager-app.git
-cd vereins-manager-app
-
-# Dependencies installieren
-npm install
-
-# Environment-Variablen konfigurieren
-cp .env.local.example .env.local
-# Firebase-Konfiguration in .env.local eintragen
-
-# Development-Server starten
-npm run dev
-```
 
 ### Firebase Setup
 
