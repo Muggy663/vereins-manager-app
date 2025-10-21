@@ -13,7 +13,7 @@ export default function HomePage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Users className="h-8 w-8 text-blue-600" />
-              <h1 className="text-2xl font-bold text-gray-900">Vereins-Manager</h1>
+              <h1 className="text-2xl font-bold text-gray-900">Verein-im-Visier</h1>
             </div>
             <div className="flex gap-2">
               <Button variant="outline">Anmelden</Button>
@@ -28,7 +28,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-5xl font-bold text-gray-900 mb-6">
-              Moderne <span className="text-blue-600">Vereinssoftware</span> für Schützenvereine
+              Die digitale <span className="text-blue-600">Vereinsverwaltung</span> mit dem Schießsport im Fokus
             </h1>
             <p className="text-xl text-gray-600 mb-8">
               Komplette Vereinsverwaltung mit Mitgliederdatenbank, SEPA-Beitragsverwaltung, 
@@ -228,7 +228,7 @@ export default function HomePage() {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Users className="h-6 w-6" />
-                <span className="font-bold text-lg">Vereins-Manager</span>
+                <span className="font-bold text-lg">Verein-im-Visier</span>
               </div>
               <p className="text-gray-400">
                 Moderne Vereinssoftware für deutsche Schützenvereine
@@ -262,7 +262,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 Vereins-Manager. Speziell für deutsche Schützenvereine entwickelt.</p>
+            <p>&copy; 2025 Verein-im-Visier. Speziell für deutsche Schützenvereine entwickelt.</p>
           </div>
         </div>
       </footer>

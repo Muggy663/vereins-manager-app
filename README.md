@@ -1,6 +1,6 @@
-# 🎯 Vereins-Manager
+# 🎯 Verein-im-Visier
 
-> **Moderne Digitalisierung für deutsche Schützenvereine**
+> **Die digitale Vereinsverwaltung mit dem Schießsport im Fokus.**
 
 Eine vollständig digitale Lösung für die Verwaltung von Schützenvereinen. Entwickelt als eigenständige App für professionelle Vereinsführung.
 
@@ -58,29 +58,25 @@ Eine vollständig digitale Lösung für die Verwaltung von Schützenvereinen. En
 
 ```bash
 # Repository klonen
-git clone https://github.com/Muggy663/vereins-manager.git
-cd vereins-manager
+git clone https://github.com/Muggy663/verein-im-visier.git
+cd verein-im-visier
 
 # Dependencies installieren
 npm install
 
 # Development-Server starten
 npm run dev
-```
-=======
->>>>>>> aaa44ff882e38674ffcd2b6c52ef9565d8b19e34
 
 ### Firebase Setup
 
 1. Neues Firebase-Projekt erstellen: `vereins-manager-prod`
 2. Authentication aktivieren (E-Mail/Passwort)
+2. Authentication aktivieren (E-Mail/Passwort, Google)
 3. Firestore Database erstellen
 4. Storage aktivieren
 5. Firebase-Config in `.env.local` eintragen
 
 ## 📊 Datenbank-Struktur
-
-Die App nutzt primär die bestehenden Collections der RWK-App (`clubs`, `users`) und erweitert diese um schießbuchspezifische Sub-Collections.
 
 ```
 /clubs/{clubId}                    # Vereins-Stammdaten

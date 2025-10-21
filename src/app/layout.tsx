@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Vereins-Manager - Digitales Schießbuch",
-  description: "Digitales Schießbuch für moderne Schützenvereine",
+  title: "Verein-im-Visier",
+  description: "Die digitale Vereinsverwaltung mit dem Schießsport im Fokus.",
 };
 
 export default function RootLayout({
