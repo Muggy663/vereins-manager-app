@@ -102,11 +102,11 @@ npm run dev
 
 - **E-Mail**: rwk-leiter-ksve@gmx.de
 - **GitHub Issues**: [Issues](https://github.com/Muggy663/vereins-manager-app/issues)
-- **Entwickler**: KSV Einbeck
+- **Entwickler**: Marcel Bünger
 
 ## 📄 Lizenz
 
-**Copyright © 2025 KSV Einbeck. Alle Rechte vorbehalten.**
+**Copyright © 2025 Marcel Bünger. Alle Rechte vorbehalten.**
 
 Diese Software ist für den Einsatz in deutschen Schützenvereinen entwickelt.
 
