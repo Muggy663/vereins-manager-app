@@ -64,13 +64,11 @@ cd vereins-manager
 # Dependencies installieren
 npm install
 
-# Environment-Variablen konfigurieren
-cp .env.local.example .env.local
-# Firebase-Konfiguration in .env.local eintragen
-
 # Development-Server starten
 npm run dev
 ```
+=======
+>>>>>>> aaa44ff882e38674ffcd2b6c52ef9565d8b19e34
 
 ### Firebase Setup
 
