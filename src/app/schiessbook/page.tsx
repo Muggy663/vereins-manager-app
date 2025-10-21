@@ -1,331 +1,304 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Target, Plus, BarChart3, Calendar, Trophy } from 'lucide-react';
+import { Target, Plus, Calendar, TrendingUp, Award, Users } from 'lucide-react';
 
-interface SchussEintrag {
-  id: string;
-  datum: string;
-  disziplin: string;
-  schussanzahl: number;
-  ringe: number;
-  teiler: number;
-  bemerkung?: string;
-}
-
-export default function SchiessbuchPage() {
-  const [eintraege, setEintraege] = useState<SchussEintrag[]>([
+export default function SchiessBookPage() {
+  const [entries, setEntries] = useState([
     {
       id: '1',
-      datum: '2025-01-15',
-      disziplin: 'Luftgewehr 10m',
-      schussanzahl: 40,
-      ringe: 385,
-      teiler: 15,
-      bemerkung: 'Gutes Training, Atmung verbessert'
+      date: '2024-01-15',
+      discipline: 'Luftgewehr 10m',
+      shots: 40,
+      rings: 385,
+      teiler: 12,
+      location: 'Schießstand Einbeck',
+      supervisor: 'Max Mustermann',
+      notes: 'Gute Konzentration, Atmung verbessert',
+      isCompetition: false
     },
     {
       id: '2', 
-      datum: '2025-01-12',
-      disziplin: 'Luftpistole 10m',
-      schussanzahl: 40,
-      ringe: 365,
-      teiler: 28,
-      bemerkung: 'Konzentration am Ende nachgelassen'
+      date: '2024-01-20',
+      discipline: 'Luftgewehr 10m',
+      shots: 40,
+      rings: 392,
+      teiler: 15,
+      location: 'Schießstand Einbeck',
+      supervisor: 'Anna Schmidt',
+      notes: 'Neuer persönlicher Rekord!',
+      isCompetition: true
     }
   ]);
 
-  const [neuerEintrag, setNeuerEintrag] = useState({
-    datum: new Date().toISOString().split('T')[0],
-    disziplin: 'Luftgewehr 10m',
-    schussanzahl: 40,
-    ringe: 0,
-    teiler: 0,
-    bemerkung: ''
-  });
+  const [showAddForm, setShowAddForm] = useState(false);
 
-  const [showForm, setShowForm] = useState(false);
-
-  const disziplinen = [
-    'Luftgewehr 10m',
-    'Luftpistole 10m', 
-    'Kleinkaliber 50m',
-    'Großkaliber 100m',
-    'Bogen 18m',
-    'Armbrust 10m'
-  ];
-
-  const addEintrag = () => {
-    const eintrag: SchussEintrag = {
-      id: Date.now().toString(),
-      ...neuerEintrag
-    };
-    
-    setEintraege([eintrag, ...eintraege]);
-    setNeuerEintrag({
-      datum: new Date().toISOString().split('T')[0],
-      disziplin: 'Luftgewehr 10m',
-      schussanzahl: 40,
-      ringe: 0,
-      teiler: 0,
-      bemerkung: ''
-    });
-    setShowForm(false);
-  };
-
-  const durchschnittRinge = eintraege.length > 0 
-    ? (eintraege.reduce((sum, e) => sum + e.ringe, 0) / eintraege.length).toFixed(1)
-    : '0';
-
-  const durchschnittTeiler = eintraege.length > 0
-    ? (eintraege.reduce((sum, e) => sum + e.teiler, 0) / eintraege.length).toFixed(1) 
-    : '0';
-
-  const bestersSchuss = eintraege.length > 0
-    ? Math.max(...eintraege.map(e => e.ringe))
-    : 0;
+  const avgRings = entries.length > 0 ? 
+    (entries.reduce((sum, e) => sum + e.rings, 0) / entries.length).toFixed(1) : 0;
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center gap-3">
-          <Target className="h-8 w-8 text-blue-600" />
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Digitales Schießbuch</h1>
-            <p className="text-gray-600">Erfassen und verfolgen Sie Ihre Schussergebnisse</p>
-          </div>
+    <div className="w-full px-2 md:px-4 py-4 md:py-8">
+      <div className="mb-4 md:mb-8">
+        <div className="flex items-center mb-4">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={() => window.history.back()}
+            className="mr-4"
+          >
+            ← Zurück
+          </Button>
+          <h1 className="text-xl md:text-2xl lg:text-4xl font-bold text-primary">🎯 Digitales Schießbuch</h1>
         </div>
-        <Button onClick={() => setShowForm(true)} className="flex items-center gap-2">
-          <Plus className="h-4 w-4" />
-          Neuer Eintrag
-        </Button>
+        <p className="text-sm md:text-base lg:text-lg text-muted-foreground">
+          Persönliches Schießbuch für Trainingsfortschritte
+        </p>
       </div>
 
       {/* Statistiken */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center gap-3">
-              <Target className="h-8 w-8 text-blue-600" />
-              <div>
-                <p className="text-sm text-gray-600">Einträge gesamt</p>
-                <p className="text-2xl font-bold">{eintraege.length}</p>
-              </div>
-            </div>
+          <CardContent className="p-4">
+            <div className="text-2xl font-bold text-blue-600">{entries.length}</div>
+            <p className="text-sm text-gray-600">Einträge</p>
           </CardContent>
         </Card>
-
         <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center gap-3">
-              <BarChart3 className="h-8 w-8 text-green-600" />
-              <div>
-                <p className="text-sm text-gray-600">⌀ Ringe</p>
-                <p className="text-2xl font-bold">{durchschnittRinge}</p>
-              </div>
-            </div>
+          <CardContent className="p-4">
+            <div className="text-2xl font-bold text-green-600">{avgRings}</div>
+            <p className="text-sm text-gray-600">Ø Ringe</p>
           </CardContent>
         </Card>
-
         <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center gap-3">
-              <Trophy className="h-8 w-8 text-yellow-600" />
-              <div>
-                <p className="text-sm text-gray-600">Bester Schuss</p>
-                <p className="text-2xl font-bold">{bestersSchuss}</p>
-              </div>
+          <CardContent className="p-4">
+            <div className="text-2xl font-bold text-purple-600">
+              {entries.filter(e => e.isCompetition).length}
             </div>
+            <p className="text-sm text-gray-600">Wettkämpfe</p>
           </CardContent>
         </Card>
-
         <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center gap-3">
-              <Calendar className="h-8 w-8 text-purple-600" />
-              <div>
-                <p className="text-sm text-gray-600">⌀ Teiler</p>
-                <p className="text-2xl font-bold">{durchschnittTeiler}</p>
-              </div>
+          <CardContent className="p-4">
+            <div className="text-2xl font-bold text-orange-600">
+              {Math.max(...entries.map(e => e.rings), 0)}
             </div>
+            <p className="text-sm text-gray-600">Bestes Ergebnis</p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Neuer Eintrag Form */}
-      {showForm && (
-        <Card className="mb-8 border-2 border-blue-200 bg-blue-50">
-          <CardHeader>
-            <CardTitle className="text-blue-900">Neuer Schusseintrag</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div>
-                <label className="text-sm font-medium text-blue-800">Datum</label>
-                <Input
-                  type="date"
-                  value={neuerEintrag.datum}
-                  onChange={(e) => setNeuerEintrag({...neuerEintrag, datum: e.target.value})}
-                  className="bg-white"
-                />
-              </div>
+      {/* Aktionen */}
+      <Card className="mb-6">
+        <CardContent className="p-4">
+          <div className="flex gap-3">
+            <Button onClick={() => setShowAddForm(!showAddForm)}>
+              <Plus className="h-4 w-4 mr-2" />
+              Neuer Eintrag
+            </Button>
+            <Button variant="outline">
+              <TrendingUp className="h-4 w-4 mr-2" />
+              Statistiken
+            </Button>
+            <Button variant="outline">
+              <Award className="h-4 w-4 mr-2" />
+              Fortschritte
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
 
-              <div>
-                <label className="text-sm font-medium text-blue-800">Disziplin</label>
-                <select
-                  value={neuerEintrag.disziplin}
-                  onChange={(e) => setNeuerEintrag({...neuerEintrag, disziplin: e.target.value})}
-                  className="w-full p-2 border rounded-md bg-white"
-                >
-                  {disziplinen.map(d => (
-                    <option key={d} value={d}>{d}</option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="text-sm font-medium text-blue-800">Schussanzahl</label>
-                <Input
-                  type="number"
-                  value={neuerEintrag.schussanzahl}
-                  onChange={(e) => setNeuerEintrag({...neuerEintrag, schussanzahl: parseInt(e.target.value) || 0})}
-                  className="bg-white"
-                />
-              </div>
-
-              <div>
-                <label className="text-sm font-medium text-blue-800">Ringe</label>
-                <Input
-                  type="number"
-                  value={neuerEintrag.ringe}
-                  onChange={(e) => setNeuerEintrag({...neuerEintrag, ringe: parseInt(e.target.value) || 0})}
-                  className="bg-white"
-                />
-              </div>
-
-              <div>
-                <label className="text-sm font-medium text-blue-800">Teiler</label>
-                <Input
-                  type="number"
-                  value={neuerEintrag.teiler}
-                  onChange={(e) => setNeuerEintrag({...neuerEintrag, teiler: parseInt(e.target.value) || 0})}
-                  className="bg-white"
-                />
-              </div>
-
-              <div>
-                <label className="text-sm font-medium text-blue-800">Schnitt</label>
-                <Input
-                  value={neuerEintrag.schussanzahl > 0 ? (neuerEintrag.ringe / neuerEintrag.schussanzahl).toFixed(2) : '0.00'}
-                  disabled
-                  className="bg-gray-100"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="text-sm font-medium text-blue-800">Bemerkung (optional)</label>
-              <Input
-                value={neuerEintrag.bemerkung}
-                onChange={(e) => setNeuerEintrag({...neuerEintrag, bemerkung: e.target.value})}
-                placeholder="z.B. Wetterbedingungen, Gefühl, Verbesserungen..."
-                className="bg-white"
-              />
-            </div>
-
-            <div className="flex gap-3">
-              <Button onClick={addEintrag} className="bg-blue-600 hover:bg-blue-700">
-                Eintrag speichern
-              </Button>
-              <Button variant="outline" onClick={() => setShowForm(false)}>
-                Abbrechen
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Schussliste */}
+      {/* Einträge */}
       <Card>
         <CardHeader>
-          <CardTitle>Schussergebnisse ({eintraege.length})</CardTitle>
+          <CardTitle>Schießbuch-Einträge</CardTitle>
         </CardHeader>
         <CardContent>
-          {eintraege.length === 0 ? (
-            <div className="text-center py-12">
-              <Target className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Noch keine Einträge</h3>
-              <p className="text-gray-600 mb-4">Erfassen Sie Ihren ersten Schusseintrag</p>
-              <Button onClick={() => setShowForm(true)}>
-                <Plus className="h-4 w-4 mr-2" />
-                Ersten Eintrag erstellen
-              </Button>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {eintraege.map(eintrag => (
-                <div key={eintrag.id} className="border rounded-lg p-4 hover:bg-gray-50">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-3">
-                      <Badge variant="outline">{eintrag.disziplin}</Badge>
-                      <span className="text-sm text-gray-600">
-                        {new Date(eintrag.datum).toLocaleDateString('de-DE')}
-                      </span>
+          <div className="space-y-4">
+            {entries.map(entry => (
+              <Card key={entry.id} className="border">
+                <CardContent className="p-4">
+                  <div className="flex justify-between items-start mb-3">
+                    <div>
+                      <h3 className="font-semibold">{entry.discipline}</h3>
+                      <p className="text-sm text-muted-foreground">
+                        {new Date(entry.date).toLocaleDateString('de-DE')} • {entry.location}
+                      </p>
                     </div>
-                    <div className="flex items-center gap-4">
-                      <div className="text-right">
-                        <div className="text-lg font-bold text-blue-600">
-                          {eintrag.ringe} Ringe
-                        </div>
-                        <div className="text-sm text-gray-600">
-                          {eintrag.teiler} Teiler
-                        </div>
-                      </div>
+                    <div className="flex gap-2">
+                      <Badge variant={entry.isCompetition ? 'default' : 'outline'}>
+                        {entry.isCompetition ? 'Wettkampf' : 'Training'}
+                      </Badge>
+                      <Badge variant="secondary">
+                        {entry.rings} Ringe
+                      </Badge>
                     </div>
                   </div>
                   
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                     <div>
-                      <span className="text-gray-600">Schüsse:</span>
-                      <span className="ml-2 font-medium">{eintrag.schussanzahl}</span>
+                      <span className="text-muted-foreground">Schuss:</span>
+                      <span className="ml-2 font-medium">{entry.shots}</span>
                     </div>
                     <div>
-                      <span className="text-gray-600">Schnitt:</span>
-                      <span className="ml-2 font-medium">
-                        {(eintrag.ringe / eintrag.schussanzahl).toFixed(2)}
-                      </span>
+                      <span className="text-muted-foreground">Teiler:</span>
+                      <span className="ml-2 font-medium">{entry.teiler}</span>
                     </div>
                     <div>
-                      <span className="text-gray-600">Teiler/Schuss:</span>
-                      <span className="ml-2 font-medium">
-                        {(eintrag.teiler / eintrag.schussanzahl).toFixed(2)}
-                      </span>
+                      <span className="text-muted-foreground">Aufsicht:</span>
+                      <span className="ml-2 font-medium">{entry.supervisor}</span>
                     </div>
                     <div>
-                      <span className="text-gray-600">Prozent:</span>
-                      <span className="ml-2 font-medium">
-                        {((eintrag.ringe / (eintrag.schussanzahl * 10)) * 100).toFixed(1)}%
-                      </span>
+                      <span className="text-muted-foreground">Schnitt:</span>
+                      <span className="ml-2 font-medium">{(entry.rings / entry.shots).toFixed(1)}</span>
                     </div>
                   </div>
                   
-                  {eintrag.bemerkung && (
-                    <div className="mt-3 p-3 bg-gray-100 rounded text-sm">
-                      <span className="text-gray-600">Bemerkung:</span>
-                      <span className="ml-2">{eintrag.bemerkung}</span>
+                  {entry.notes && (
+                    <div className="mt-3 p-3 bg-gray-50 rounded">
+                      <p className="text-sm">{entry.notes}</p>
                     </div>
                   )}
-                </div>
-              ))}
-            </div>
-          )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </CardContent>
       </Card>
+
+      {/* Feature-Ideen */}
+      <div className="mt-8 space-y-6">
+        <Card className="bg-blue-50 border-blue-200">
+          <CardHeader>
+            <CardTitle className="text-blue-800">🎯 Schießsport Features</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-2 gap-4 text-sm text-blue-700">
+              <div>
+                <h4 className="font-semibold mb-2">🏹 Disziplinen & Training:</h4>
+                <ul className="space-y-1 list-disc list-inside">
+                  <li>Luftgewehr 10m (Auflage/Freihand)</li>
+                  <li>Luftpistole 10m</li>
+                  <li>Kleinkaliber 50m (liegend/stehend)</li>
+                  <li>Großkaliber 100m/300m</li>
+                  <li>Bogen & Armbrust</li>
+                  <li>Trainingsempfehlungen basierend auf Ergebnissen</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-2">📊 Auswertungen & Statistiken:</h4>
+                <ul className="space-y-1 list-disc list-inside">
+                  <li>Leistungsentwicklung grafisch</li>
+                  <li>Vergleich mit Vereinskameraden</li>
+                  <li>Saisonstatistiken</li>
+                  <li>Wettkampf vs. Training</li>
+                  <li>Schussgruppen-Analyse</li>
+                  <li>Munitionsverbrauch</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-red-50 border-red-200">
+          <CardHeader>
+            <CardTitle className="text-red-800">⚖️ Deutsches Waffenrecht & Compliance</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-2 gap-4 text-sm text-red-700">
+              <div>
+                <h4 className="font-semibold mb-2">📋 Rechtliche Dokumentation:</h4>
+                <ul className="space-y-1 list-disc list-inside">
+                  <li>WBK-Nummern & Gültigkeitsdaten erfassen</li>
+                  <li>Waffenbesitzkarten-Verwaltung</li>
+                  <li>Munitionserwerbsscheine dokumentieren</li>
+                  <li>Sachkunde-Nachweise verwalten</li>
+                  <li>Vereinsmitgliedschaft für WBK bestätigen</li>
+                  <li>Schießnachweis für Behörden generieren</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-2">🔒 Sicherheit & Kontrolle:</h4>
+                <ul className="space-y-1 list-disc list-inside">
+                  <li>Mindestschusszahl (18 Schuss/Jahr) überwachen</li>
+                  <li>Waffenrechtliche Zuverlässigkeit dokumentieren</li>
+                  <li>Sicherheitsbelehrungen protokollieren</li>
+                  <li>Unfallmeldungen an Behörden</li>
+                  <li>Standaufsicht-Protokolle</li>
+                  <li>Munitionskontrolle & Lagerung</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-green-50 border-green-200">
+          <CardHeader>
+            <CardTitle className="text-green-800">🏆 Wettkämpfe & Abzeichen</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-2 gap-4 text-sm text-green-700">
+              <div>
+                <h4 className="font-semibold mb-2">🥇 Leistungsabzeichen:</h4>
+                <ul className="space-y-1 list-disc list-inside">
+                  <li>DSB-Leistungsabzeichen (Bronze/Silber/Gold)</li>
+                  <li>Landesverband-Abzeichen</li>
+                  <li>Schützenschnur-Qualifikationen</li>
+                  <li>Jugend-Leistungsabzeichen</li>
+                  <li>Automatische Abzeichen-Erkennung</li>
+                  <li>Urkunden-Generator</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-2">🎯 Wettkampf-Integration:</h4>
+                <ul className="space-y-1 list-disc list-inside">
+                  <li>DSB-Wettkampf Import/Export</li>
+                  <li>Landesliga-Ergebnisse</li>
+                  <li>Vereinsmeisterschaften</li>
+                  <li>Königsschießen & Pokale</li>
+                  <li>Mannschafts-Aufstellungen</li>
+                  <li>Startgeld-Abrechnung</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-purple-50 border-purple-200">
+          <CardHeader>
+            <CardTitle className="text-purple-800">👥 Vereins-Integration</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-2 gap-4 text-sm text-purple-700">
+              <div>
+                <h4 className="font-semibold mb-2">👨‍🏫 Trainer & Jugend:</h4>
+                <ul className="space-y-1 list-disc list-inside">
+                  <li>Trainer-Dashboard für alle Schützen</li>
+                  <li>Jugendtraining-Protokolle</li>
+                  <li>Eltern-Benachrichtigungen</li>
+                  <li>Trainingsgruppen verwalten</li>
+                  <li>Fortschritts-Reports</li>
+                  <li>Sicherheitsschulungen dokumentieren</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-2">📱 Digitale Features:</h4>
+                <ul className="space-y-1 list-disc list-inside">
+                  <li>Mobile App für Schützen</li>
+                  <li>QR-Code Schießbuch-Zugang</li>
+                  <li>Offline-Modus für Schießstand</li>
+                  <li>Foto-Upload von Scheiben</li>
+                  <li>Sprachnotizen für Training</li>
+                  <li>Social Features (Vereins-Feed)</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

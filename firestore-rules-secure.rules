@@ -1,0 +1,51 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Benutzer-Berechtigungen - nur eigene lesen
+    match /user_permissions/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Club-Daten - nur für Mitglieder des Vereins
+    match /clubs/{clubId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && 
+        exists(/databases/$(database)/documents/user_permissions/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/user_permissions/$(request.auth.uid)).data.clubRoles[clubId] in ['VORSTAND', 'KASSENWART'];
+      
+      // Mitglieder - Lesen für alle Vereinsmitglieder, Schreiben nur für Vorstand/Kassenwart
+      match /mitglieder/{memberId} {
+        allow read: if request.auth != null;
+        allow write: if request.auth != null && 
+          exists(/databases/$(database)/documents/user_permissions/$(request.auth.uid)) &&
+          get(/databases/$(database)/documents/user_permissions/$(request.auth.uid)).data.clubRoles[clubId] in ['VORSTAND', 'KASSENWART'];
+      }
+      
+      // Aufgaben - alle Vereinsmitglieder
+      match /tasks/{taskId} {
+        allow read, write: if request.auth != null;
+      }
+      
+      // Events - alle Vereinsmitglieder  
+      match /events/{eventId} {
+        match read, write: if request.auth != null;
+      }
+    }
+    
+    // Persönliche Schießbücher - nur eigene
+    match /users/{userId}/shooting_logs/{logId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Test-Collection für Setup (temporär)
+    match /test/{document} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Alles andere verbieten
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

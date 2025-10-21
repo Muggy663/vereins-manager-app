@@ -24,16 +24,16 @@
    - Statistiken und Auswertungen
    - Mobile-optimiert für Schießstand
 
-4. **🏆 Wettkampf-Management** (Feature)
-   - Rundenwettkämpfe (RWK)
-   - Kreismeisterschaften (KM)
-   - Startlisten, Ergebnisauswertungen
-   - DSB-konforme Berechnungen
+4. **📋 Aufgaben-Management** (Feature)
+   - To-Do-Listen für Vorstand
+   - Prioritäten-System
+   - Zuständigkeiten
+   - Fortschritts-Tracking
 
 5. **📅 Termine & Events** (Feature)
    - Vereinskalender
    - Trainingszeiten
-   - Wettkampfplanung
+   - Vereinsveranstaltungen
    - Automatische Erinnerungen
 
 6. **⚖️ Vereinsrecht & Protokolle** (Feature)
@@ -81,7 +81,7 @@
 ### **Phase 2: Erweiterte Features (Q2 2025)**
 - Digitales Schießbuch
 - Terminverwaltung
-- Wettkampf-Management
+- Aufgaben-Management
 - Mobile App (PWA)
 
 ### **Phase 3: Professional Features (Q3 2025)**

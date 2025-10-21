@@ -110,7 +110,7 @@ interface ClubEvent {
   title: string;
   description?: string;
   date: Timestamp;
-  type: 'training' | 'wettkampf' | 'versammlung';
+  type: 'training' | 'versammlung' | 'vereinsfest';
   participants?: string[]; // Member IDs
 }
 ```
@@ -128,8 +128,7 @@ interface ShootingLogEntry {
   location: string; // Schießstand
   supervisorName?: string; // Aufsicht
   notes?: string; // Eigene Notizen
-  isCompetition: boolean;
-  rwkScoreId?: string; // Verknüpfung zur RWK-App
+  isTraining: boolean;
 }
 
 // /users/{userId}/profile
@@ -159,59 +158,19 @@ interface UserProfile {
 3. **Automatische Zuordnung** zum richtigen Verein
 4. **Rolle MITGLIED** wird vergeben
 
-## 5. 🌉 API-Brücke (Cloud Function)
+## 5. 📊 Vereins-spezifische Features
 
-### RWK → Vereins-App Integration
+### Schießsport-Integration
+- **Digitales Schießbuch** für Trainingsdokumentation
+- **Standaufsichts-Verwaltung** mit Dienstplänen
+- **Sicherheitsprotokolle** und Belehrungen
+- **Ausbildungs-Tracking** (Trainer, Standaufsicht, etc.)
 
-```typescript
-// Cloud Function: addRwkResultToShootingLog
-export const addRwkResultToShootingLog = functions.https.onRequest(async (req, res) => {
-  // 1. Token-Validierung
-  const token = req.headers.authorization?.replace('Bearer ', '');
-  const decodedToken = await admin.auth().verifyIdToken(token);
-  
-  // 2. Berechtigung prüfen
-  const hasPermission = await checkSportleiterPermission(decodedToken.uid, req.body.shooterId);
-  
-  // 3. Schießbuch-Eintrag erstellen
-  if (hasPermission) {
-    await admin.firestore()
-      .collection('users').doc(req.body.shooterId)
-      .collection('shooting_logs').add({
-        date: new Date(req.body.date),
-        disciplineId: req.body.discipline,
-        rings: req.body.rings,
-        rwkScoreId: req.body.rwkScoreId,
-        isCompetition: true,
-        // ...weitere Daten
-      });
-  }
-});
-```
-
-### API-Aufruf aus RWK-App
-```typescript
-// In RWK-App: Button "Ins Schießbuch übertragen"
-const transferToShootingLog = async (scoreData) => {
-  const response = await fetch(
-    'https://us-central1-vereins-manager-prod.cloudfunctions.net/addRwkResultToShootingLog',
-    {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${await user.getIdToken()}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        rwkScoreId: scoreData.id,
-        shooterId: scoreData.shooterId,
-        date: scoreData.date,
-        discipline: scoreData.discipline,
-        rings: scoreData.rings
-      })
-    }
-  );
-};
-```
+### Vereinsorganisation
+- **Dienstpläne** für Küche, Reinigung, Standaufsicht
+- **Aufgaben-Management** für Vorstand
+- **Protokoll-System** für Versammlungen
+- **SEPA-Beitragsverwaltung** mit deutschen Banken
 
 ## 6. 🔐 Security Rules
 

@@ -202,44 +202,93 @@ vereins-manager/
 
 ## 🛠️ Entwicklungs-Timeline
 
-### Woche 1-2: Setup & Basis
-- [ ] Repository erstellen
-- [ ] UI-Komponenten klonen
-- [ ] Firebase Setup
-- [ ] Basis-Layout
+### ✅ Phase 1: Setup & Basis (ERLEDIGT)
+- [x] Repository erstellen
+- [x] Next.js 14 Setup mit TypeScript
+- [x] Firebase Konfiguration
+- [x] UI-Komponenten (Tailwind + Radix)
+- [x] Basis-Layout und Navigation
+- [x] Auth-System mit Login
+- [x] Multi-Tenant Firestore-Regeln
+- [x] DSGVO-konforme Datenschutz & Impressum
+- [x] Testdaten (22 Mitglieder, Verein, Events)
+- [x] Sichere ClubService-Klasse
 
-### Woche 3-4: Mitgliederverwaltung
-- [ ] Mitglieder-CRUD
-- [ ] Import/Export
-- [ ] Suche & Filter
+### 🔄 Phase 2: Mitgliederverwaltung (IN ARBEIT)
+- [ ] Mitglieder-Liste mit sicherer Datentrennung
+- [ ] CRUD-Operationen mit Berechtigungsprüfung
+- [ ] Erweiterte Suche & Filter
+- [ ] Import/Export (CSV, Excel)
 - [ ] Mobile-Optimierung
+- [ ] Geburtstage & Jubiläen
 
-### Woche 5-6: Beitragsverwaltung
-- [ ] Beitragssätze
-- [ ] SEPA-Integration
-- [ ] Mahnwesen
-- [ ] Reports
+### 📋 Phase 3: Beitragsverwaltung & SEPA
+- [ ] Beitragskategorien-Verwaltung
+- [ ] SEPA-Mandate & Lastschriften
+- [ ] Multi-Bank-Export-Formate
+- [ ] Mahnwesen mit PDF-Generation
+- [ ] Zahlungsübersicht & Reports
+- [ ] Beitrags-Dashboard
 
-### Woche 7-8: Weitere Module
-- [ ] Lizenzen & Ausbildungen
-- [ ] Aufgaben-Management
-- [ ] Protokolle
-- [ ] Testing
+### 🎯 Phase 4: Erweiterte Features
+- [ ] Aufgaben-Management für Vorstand
+- [ ] Termine & Events-Verwaltung
+- [ ] Digitales Schießbuch (Training)
+- [ ] Protokoll-System
+- [ ] Vereinseinstellungen
 
-### Woche 9-10: Launch-Vorbereitung
-- [ ] Pricing-System
-- [ ] Onboarding
-- [ ] Documentation
-- [ ] Beta-Testing
+### 🚀 Phase 5: Launch-Vorbereitung
+- [ ] Subscription-System (Stripe)
+- [ ] Verein-Registrierung & Onboarding
+- [ ] Support-System
+- [ ] Analytics & Monitoring
+- [ ] Beta-Testing mit echten Vereinen
 
-## 🎯 Nächste Schritte
+## 🎯 Aktuelle Prioritäten
 
-1. **Repository erstellen** und Basis-Setup
-2. **UI-Komponenten** aus RWK App extrahieren
-3. **Mitgliederverwaltung** als erstes Modul implementieren
-4. **Firebase Multi-Tenant** Setup
-5. **Beta-Vereine** akquirieren
+### Sofort (diese Woche):
+1. **Sichere Mitgliederverwaltung** mit ClubService implementieren
+2. **Dashboard** mit echten Daten aus Firebase
+3. **Berechtigungssystem** vollständig testen
+4. **Mobile-Responsive** Design verfeinern
+
+### Nächste Woche:
+1. **SEPA-Beitragsverwaltung** implementieren
+2. **Import/Export-Funktionen** für Mitglieder
+3. **Erweiterte Suche** und Filter
+4. **Erste Beta-Vereine** akquirieren
+
+### Mittelfristig (Monat 2):
+1. **Subscription-System** mit Stripe
+2. **Verein-Onboarding** automatisieren
+3. **Support-Dokumentation** erstellen
+4. **Performance-Optimierung**
+
+---
+
+## 📈 Aktueller Status (Stand: Januar 2025)
+
+### ✅ Fertiggestellt:
+- **Technische Basis**: Next.js 14, Firebase, Multi-Tenant
+- **Sicherheit**: DSGVO-konforme Firestore-Regeln
+- **Auth-System**: Login mit Rollenverwaltung
+- **UI-Framework**: Tailwind CSS + Radix UI
+- **Testdaten**: 22 Mitglieder, vollständiger Verein
+- **Rechtliches**: Impressum & Datenschutz
+
+### 🔄 In Entwicklung:
+- **Mitgliederverwaltung**: Sichere CRUD-Operationen
+- **Dashboard**: Live-Statistiken aus Firebase
+- **ClubService**: Rollenbasierte Datenzugriffe
+
+### 🎯 Nächste Meilensteine:
+1. **MVP fertigstellen** (Mitglieder + Beiträge)
+2. **Erste Beta-Vereine** onboarden
+3. **Subscription-System** implementieren
+4. **Go-to-Market** starten
 
 ---
 
 **Entwickelt für deutsche Vereine - Von Vereinsmitgliedern für Vereinsmitglieder** 🇩🇪
+
+*Aktueller Fokus: Sichere Mitgliederverwaltung mit strikter Vereinstrennung*
